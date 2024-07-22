@@ -6,12 +6,6 @@ const decorationType = vscode.window.createTextEditorDecorationType({
 });
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Congratulations, your extension "textswap" is now active!');
-
-  const helloWorldCmd = vscode.commands.registerCommand("textswap.helloWorld", () => {
-    vscode.window.showInformationMessage("Hello World from textswap!");
-  });
-
   let textSwapCmd = vscode.commands.registerCommand("textswap.textswap", async () => {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
@@ -42,10 +36,16 @@ export function activate(context: vscode.ExtensionContext) {
       // Exit Vim visual mode
       await vscode.commands.executeCommand("extension.vim_escape");
 
-      // Move cursor to end of selection
       const newPosition = selection.end;
       editor.selection = new vscode.Selection(newPosition, newPosition);
     } else {
+      // Cancel if selections overlap
+      if (selection.intersection(firstSelection.range)) {
+        firstSelection = null;
+        editor.setDecorations(decorationType, []);
+        return;
+      }
+
       // Second press: swap text
       await editor.edit(editBuilder => {
         editBuilder.replace(firstSelection!.range, selectedText);
@@ -59,7 +59,6 @@ export function activate(context: vscode.ExtensionContext) {
     }
   });
 
-  context.subscriptions.push(helloWorldCmd);
   context.subscriptions.push(textSwapCmd);
 }
 
