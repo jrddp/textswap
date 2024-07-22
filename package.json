@@ -15,17 +15,22 @@
     "commands": [
       {
         "command": "textswap.textswap",
-        "title": "TextSwap"
+        "title": "TextSwap (Word)"
       },
       {
-        "command": "textswap.helloWorld",
-        "title": "Hello World"
+        "command": "textswap.textswapline",
+        "title": "TextSwap (Line)"
       }
     ],
     "keybindings": [
       {
         "command": "textswap.textswap",
         "key": "ctrl+k",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "textswap.textswapline",
+        "key": "ctrl+shift+k",
         "when": "editorTextFocus"
       }
     ]
