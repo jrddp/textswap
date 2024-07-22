@@ -2,6 +2,7 @@
   "name": "textswap",
   "displayName": "TextSwap",
   "description": "Quickly make and swap selections of text!",
+  "repository": "https://github.com/jrddp/textswap",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.91.0"
